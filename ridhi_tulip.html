@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ridhi ka sawal 🌷</title>
+<style>
+  :root {
+    box-sizing: border-box;
+    --pink: #ffd6e7;
+    --rose: #ff6b9a;
+    --green: #8fd3a8;
+    --cream: #fff8f0;
+    --ink: #5a2a40;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    height: 100%;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    color: var(--ink);
+    background: linear-gradient(160deg, var(--pink), var(--cream) 60%, #e6f7ec);
+    overflow: hidden;
+  }
+  .flower {
+    position: fixed;
+    top: -40px;
+    font-size: 24px;
+    animation: fall linear infinite;
+    pointer-events: none;
+    opacity: 0.7;
+    z-index: 5;
+  }
+  @keyframes fall {
+    to { transform: translateY(110vh) rotate(360deg); }
+  }
+  .card {
+    position: relative;
+    max-width: 420px;
+    margin: 12vh auto 0;
+    padding: 28px 22px;
+    text-align: center;
+    background: #fff;
+    border-radius: 28px;
+    box-shadow: 0 12px 30px rgba(255, 107, 154, 0.25);
+    z-index: 1;
+  }
+  h1 { font-size: 1.6rem; margin: 0 0 6px; }
+  .big-name { font-size: 2.6rem; color: var(--rose); animation: bounce 2s ease-in-out infinite; }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .sub { margin: 0 0 22px; color: #8a5a6e; }
+  .pfps {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin-bottom: 22px;
+  }
+  .pfp {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-size: 46px;
+    border: 4px solid var(--green);
+    background: var(--pink);
+  }
+  .pfp.ridhi { border-color: var(--rose); background: #ffe9f1; }
+  .pfp small {
+    display: block;
+    font-size: 11px;
+    margin-top: 4px;
+    font-family: inherit;
+  }
+  .question {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0 0 18px;
+  }
+  .btns {
+    position: relative;
+    height: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+  button {
+    font: inherit;
+    font-size: 1rem;
+    padding: 12px 26px;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .yes {
+    background: var(--rose);
+    color: #fff;
+    box-shadow: 0 6px 14px rgba(255, 107, 154, 0.4);
+  }
+  .yes:hover { transform: scale(1.08); }
+  .no {
+    background: #e8e8e8;
+    color: #666;
+    position: absolute;
+    transition: left 0.12s ease, top 0.12s ease, transform 0.2s ease;
+    font-size: 0.85rem;
+    padding: 8px 16px;
+  }
+  .msg {
+    min-height: 1.5em;
+    margin-top: 14px;
+    font-weight: 600;
+    color: var(--rose);
+  }
+  .yay {
+    font-size: 1.4rem;
+    margin-top: 10px;
+    animation: pop 0.5s ease;
+  }
+  @keyframes pop {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  footer {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #a07a8c;
+  }
+  .credit { display: block; margin-top: 8px; font-size: 13px; font-weight: 600; color: #8a5a6e; }
+  .watermark {
+    position: fixed;
+    bottom: 12px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 12px;
+    color: #b48aa0;
+    opacity: 0.8;
+    z-index: 2;
+  }
+</style>
+</head>
+<body>
+
+<div id="garden"></div>
+
+<main class="card">
+  <h1 class="big-name">Ridhi 🌷</h1>
+  <p class="sub">Ek sawal hai, bas ek click 🌷</p>
+
+  <div class="pfps">
+    <div class="pfp">🌷<small>meri PFP</small></div>
+    <div class="pfp ridhi">🌸<small>teri PFP</small></div>
+  </div>
+
+  <p class="question">Kya tum apni PFP meri PFP se match karogi? 🥺</p>
+
+  <div class="btns" id="btns">
+    <button class="yes" id="yes">Haan obviously 💕</button>
+    <button class="no" id="no">Nahi</button>
+  </div>
+
+  <div class="msg" id="msg"></div>
+  <div class="yay" id="yay"></div>
+
+  <footer>tulips ki tarah, tum bhi sabse pyari ho 🌷</footer>
+  <p class="credit">made by Arish 🌷</p>
+</main>
+
+
+
+<script>
+  // Falling tulips
+  const garden = document.getElementById("garden");
+  const flowers = ["🌷", "🌸", "🌷", "💐"];
+  for (let i = 0; i < 18; i++) {
+    const f = document.createElement("span");
+    f.className = "flower";
+    f.textContent = flowers[i % flowers.length];
+    f.style.left = Math.random() * 100 + "vw";
+    f.style.animationDuration = 8 + Math.random() * 8 + "s";
+    f.style.animationDelay = -Math.random() * 10 + "s";
+    garden.appendChild(f);
+  }
+
+  const btns = document.getElementById("btns");
+  const yes = document.getElementById("yes");
+  const no = document.getElementById("no");
+  const msg = document.getElementById("msg");
+  const yay = document.getElementById("yay");
+
+  const genzLines = [
+    "No cap, ye button tumse bhaag raha hai 💀",
+    "Bestie, click karna itna mushkil kyun hai 😭",
+    "Rizz check: fail 💀 Yes daba na",
+    "Ye button ko bhi pata hai tum Yes dabogi 😌",
+    "Slay karna hai toh Yes wala daba 💅",
+    "Lowkey tum mujhe miss kar rahi ho 🥺",
+    "It's giving... Yes 🌷💕",
+    "Bro really said nahi 💀 respectfully no",
+    "Not the no button being shy rn 😭",
+    "Main nahi bhaagta, ye bas shy hai 🤡"
+  ];
+  const dodgeLines = [
+    "Nahi? Galat button 😜",
+    "Ek baar aur soch lo 🥺",
+    "Button bhaag gaya! 🏃",
+    "Ye wala kaam nahi karega 😤",
+    "Haan dabao na 💕",
+    "Pakad ke dikhao 😏",
+    "Hehe, nahi milega 🌷",
+    "Tumhara haath bhi nahi pahunchega 🤭",
+    "Yes dabao, mujhe bhi achha lagega 🫶",
+    "Ye button tumse darta hai 😭",
+    "Maine bola na, ye kaam nahi karega!",
+    "Abhi bhi nahi? Okay bhai 😌"
+  ];
+  let dodgeCount = 0;
+
+  // Move "No" to a random spot inside the buttons area
+  function dodge() {
+    const areaW = btns.clientWidth;
+    const areaH = btns.clientHeight;
+    const w = no.offsetWidth;
+    const h = no.offsetHeight;
+    const x = Math.random() * (areaW - w);
+    const y = Math.random() * (areaH - h);
+    no.style.left = x + "px";
+    no.style.top = y + "px";
+    msg.textContent = genzLines[dodgeCount % genzLines.length];
+    dodgeCount++;
+    yes.style.transform = "scale(" + (1 + dodgeCount * 0.06) + ")";
+    no.style.transform = "scale(" + Math.max(0.45, 1 - dodgeCount * 0.06) + ")";
+  }
+
+  no.addEventListener("mouseenter", dodge);
+  no.addEventListener("touchstart", (e) => { e.preventDefault(); dodge(); }, { passive: false });
+  no.addEventListener("click", (e) => { e.preventDefault(); dodge(); });
+
+  yes.addEventListener("click", () => {
+    msg.textContent = "";
+    yes.style.display = "none";
+    no.style.display = "none";
+    yay.textContent = "Yaaay! Match ho gaya 🌷💕🌷";
+    for (let i = 0; i < 45; i++) {
+      const c = document.createElement("span");
+      c.className = "flower";
+      c.textContent = ["🌷", "💕", "🌸", "✨"][i % 4];
+      c.style.left = Math.random() * 100 + "vw";
+      c.style.top = "-20px";
+      c.style.fontSize = 18 + Math.random() * 18 + "px";
+      c.style.animationDuration = 3 + Math.random() * 3 + "s";
+      document.body.appendChild(c);
+    }
+  });
+</script>
+</body>
+</html>
